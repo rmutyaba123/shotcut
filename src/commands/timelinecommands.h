@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,13 +25,14 @@
 #include <QUndoCommand>
 #include <QString>
 #include <QObject>
+#include <QUuid>
 #include <MltTransition.h>
 #include <MltProducer.h>
 
 namespace Timeline {
 
 enum {
-    UndoIdTrimClipIn,
+    UndoIdTrimClipIn = 100,
     UndoIdTrimClipOut,
     UndoIdFadeIn,
     UndoIdFadeOut,
@@ -528,6 +529,7 @@ private:
     MultitrackModel &m_model;
     int m_trackIndex;
     bool m_isVideo;
+    QUuid m_uuid;
 };
 
 class InsertTrackCommand : public QUndoCommand
@@ -541,6 +543,7 @@ private:
     MultitrackModel &m_model;
     int m_trackIndex;
     TrackType m_trackType;
+    QUuid m_uuid;
 };
 
 class RemoveTrackCommand : public QUndoCommand
@@ -556,6 +559,7 @@ private:
     QString m_trackName;
     UndoHelper m_undoHelper;
     QScopedPointer<Mlt::Producer> m_filtersProducer;
+    QUuid m_uuid;
 };
 
 class MoveTrackCommand : public QUndoCommand
@@ -636,6 +640,7 @@ private:
     QString m_xml;
     UndoHelper m_undoHelper;
     bool m_trackAdded;
+    QUuid m_uuid;
 };
 
 class ReplaceCommand : public QUndoCommand
